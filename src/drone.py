@@ -70,10 +70,9 @@ class drone:
             self.pos = self.prevPos
             self.next_step = self.prevPos
         else:
-            # ONLY CLAMP THE FINAL POSITION AS A LAST RESORT (The absolute guarantee)
             self.pos = np.maximum(self.next_step, lower_bounds_array)
             self.pos = np.minimum(self.pos, upper_bounds_array)
-            self.next_step = self.pos # Keep next_step in sync
+            self.next_step = self.pos 
 
         self.pathPoints.append(self.pos)
 
@@ -111,25 +110,20 @@ class drone:
         activation_range = 50.0 # Start repelling 15 units from 0
 
         for dim in range(3):
-            # Lower Bound Repulsion (Pushes away from 0)
             if self.next_step[dim] < activation_range:
-                # Example: Simple linear force that gets stronger as it approaches 0
                 penetration = activation_range - self.next_step[dim]
                 magnitude = repulseMod * penetration / activation_range
-                boundary_repulsion_vec[dim] += magnitude # Force is positive (outward)
+                boundary_repulsion_vec[dim] += magnitude
 
-            # Upper Bound Repulsion (Pushes away from 1000)
             if self.next_step[dim] > upper_bounds_array[dim] - activation_range:
-                # Example: Simple linear force that gets stronger as it approaches 1000
                 dist_to_upper = upper_bounds_array[dim] - self.next_step[dim]
                 penetration = activation_range - dist_to_upper
                 magnitude = repulseMod * penetration / activation_range
-                boundary_repulsion_vec[dim] -= magnitude # Force is negative (inward)
+                boundary_repulsion_vec[dim] -= magnitude 
         total_repulsion_vec = drone_repulsion_vec + boundary_repulsion_vec
         
-        # Capping the vector magnitude
         total_mag = np.linalg.norm(total_repulsion_vec)
-        if total_mag > repulseMod * 2: # Use a higher cap than the speed limit
+        if total_mag > repulseMod * 2: 
             total_repulsion_vec = (total_repulsion_vec / total_mag) * (repulseMod * 2)
 
         return self.next_step + total_repulsion_vec
