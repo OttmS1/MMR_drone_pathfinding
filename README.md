@@ -5,4 +5,4 @@
 
 - Make sure there are an equal number of points in all of the files in the scene directory :)
 
-# There is also a 'generateCords.py' file in ./cords/utils/ should you need it. If you need to edit the amount of drones it makes, there is a variable at the top of the file to edit.
+#### There is also a 'generateCords.py' file in ./cords/utils/ should you need it. If you need to edit the amount of drones it makes, there is a variable at the top of the file to edit.
