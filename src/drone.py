@@ -107,7 +107,7 @@ class drone:
         drone_repulsion_vec = np.sum(repulsion_vectors, axis=0)
 
         boundary_repulsion_vec = np.zeros(3, dtype=float)
-        activation_range = 50.0 # Start repelling 15 units from 0
+        activation_range = 50.0 # Start repelling 50 units from 0
 
         for dim in range(3):
             if self.next_step[dim] < activation_range:
